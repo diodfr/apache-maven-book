@@ -61,6 +61,8 @@ Figure 01-01
 
 La structure originale du projet "noubliepaslalistedescourses".
 
+image:illustrations/01-01.png[]
+
 Arnaud, qui, semble-t-il, n'a vraiment que cela à faire de son temps
 libre, se jette sur cette magnifique relique des années Java 1.1 et
 tente de le compiler. Seulement, Arnaud est un utilisateur Mac. Le
@@ -90,6 +92,7 @@ $$$ 2 colonnes [mangaNicolas] + build.bat   [mangaArnaud] + build.sh $$$
 
 image:illustrations/MangaNicolas.png[float="left"]
 
+-----------------------------------------------------------
 @echo off
 
 set JAVA_HOME=C:\jdk1.3
@@ -105,9 +108,11 @@ mkdir build
 javac -d build src\*.java
 
 jar cf noubliepaslalistedescourses.jar build\*.class
+-----------------------------------------------------------
 
-mangaArnaud
+image:illustrations/MangaArnaud.png[float="left"]
 
+-----------------------------------------------------------
 #!/bin/bash
 
 export JAVA_HOME=/opt/jdk1.3
@@ -123,6 +128,7 @@ mkdir build
 javac -d build src/*.java
 
 jar cf noubliepaslalistedescourses.jar build/*.class
+-----------------------------------------------------------
 
 De nombreux projets industriels ou communautaires sont confrontés à ce
 même problème et sont obligés de maintenir deux versions (ou plus) du
@@ -235,50 +241,30 @@ soit sa singularité.
 
 Voici le fichier envoyé par Jason :
 
-Listing 1.2 : pom.xml
-
+.Listing 1.2 : pom.xml
+------------------------------------------------------------
 <project>
-
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>fr.noubliepaslalistedescourses</groupId>
-
   <artifactId>noubliepaslalistedescourses</artifactId>
-
   <version>0.0.1-SNAPSHOT</version>
-
   <build>
-
     <sourceDirectory>src</sourceDirectory>
-
   </build>
-
   <dependencies>
-
     <dependency>
-
       <groupId>javax.mail</groupId>
-
       <artifactId>mail</artifactId>
-
       <version>1.4</version>
-
     </dependency>
-
     <dependency>
-
       <groupId>commons-io</groupId>
-
       <artifactId>commons-io</artifactId>
-
       <version>1.4</version>
-
     </dependency>
-
   </dependencies>
-
 </project>
-
+------------------------------------------------------------
 Comparé aux fichiers Ant testés jusqu'ici, ce fichier "pom.xml" – quel
 drôle de nom – ne ressemble à rien de connu. Pas de directive de
 compilation, pas d'indication d'ordre dans les tâches, pas de commande
@@ -305,44 +291,24 @@ réseau les éléments manquants. Effectivement, la première exécution de
 Maven se traduit dans la console par une série de messages de
 téléchargements divers :
 
-Listing 1.3 : Première exécution de Maven
-
+.Listing 1.3 : Première exécution de Maven
+-----------------------------------------------------------------------------------------------------------------------------------------------
 D:\noubliepaslalistedescourses>mvn package
-
 [INFO] Scanning for projects...
-
-[INFO]
-------------------------------------------------------------------------
-
-[INFO] Building Unnamed - fr.
-noubliepaslalistedescourses:noubliepaslalistedescourses:jar:0.0.1-SNAPSHOT
-
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - fr.noubliepaslalistedescourses:noubliepaslalistedescourses:jar:0.0.1-SNAPSHOT
 [INFO]    task-segment: [package]
-
-[INFO]
-------------------------------------------------------------------------
-
-Downloading:
-http://repo1.maven.org/maven2/org/apache/maven/plugins/maven-resources-plugin/2.2/maven-resources-plugin-2.2.pom
-
+[INFO] ------------------------------------------------------------------------
+Downloading: http://repo1.maven.org/maven2/org/apache/maven/plugins/maven-resources-plugin/2.2/maven-resources-plugin-2.2.pom
 1K downloaded
-
-Downloading:
-http://repo1.maven.org/maven2/org/apache/maven/plugins/maven-plugins/1/maven-plugins-1.pom
-
+Downloading: http://repo1.maven.org/maven2/org/apache/maven/plugins/maven-plugins/1/maven-plugins-1.pom
 3K downloaded
-
-Downloading:
-http://repo1.maven.org/maven2/org/apache/maven/maven-parent/1/maven-parent-1.pom
-
+Downloading: http://repo1.maven.org/maven2/org/apache/maven/maven-parent/1/maven-parent-1.pom
 6K downloaded
-
-Downloading:
-http://repo1.maven.org/maven2/org/apache/apache/1/apache-1.pom
-
+Downloading: http://repo1.maven.org/maven2/org/apache/apache/1/apache-1.pom
 3K downloaded
-
 ...
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 Cette liste de messages semble même interminable et avoir été conçue
 pour favoriser le développement d'Internet à haut débit. Tout ça pour
@@ -363,86 +329,45 @@ Poursuivons l'analyse des messages que Maven trace dans la console, en
 ignorant les lignes liées à ces téléchargements étranges mais
 apparemment nécessaires :
 
-Listing 1.4 : Seconde exécution de Maven… sans téléchargement cette fois
-
+.Listing 1.4 : Seconde exécution de Maven… sans téléchargement cette fois
+-----------------------------------------------------------
 D:\noubliepaslalistedescourses>mvn package
 
 [INFO] Scanning for projects...
-
-[INFO]
-------------------------------------------------------------------------
-
-[INFO] Building Unnamed -
-fr.maven:noubliepaslalistedescourses:jar:0.0.1-SNAPSHOT
-
+[INFO]------------------------------------------------------------------------
+[INFO] Building Unnamed - fr.maven:noubliepaslalistedescourses:jar:0.0.1-SNAPSHOT
 [INFO]    task-segment: [package]
-
-[INFO]
-------------------------------------------------------------------------
-
+[INFO]-----------------------------------------------------------------------
 [INFO] [resources:resources]
-
 [INFO] Using default encoding to copy filtered resources.
-
 [INFO] [compiler:compile]
-
-[INFO] Compiling 3 source files to
-D:\java\workspace\malistedecourses\target\classes
-
+[INFO] Compiling 3 source files to D:\java\workspace\malistedecourses\target\classes
 [INFO] [resources:testResources]
-
 [INFO] Using default encoding to copy filtered resources.
-
 [INFO] [compiler:testCompile]
-
 [INFO] Nothing to compile - all classes are up to date
-
 [INFO] [surefire:test]
+[INFO] Surefire report directory: D:\java\workspace\malistedecourses\target\surefire-reports
 
-[INFO] Surefire report directory:
-D:\java\workspace\malistedecourses\target\surefire-reports
-
- 
-
--------------------------------------------------------
-
+ -------------------------------------------------------
  T E S T S
-
--------------------------------------------------------
-
+ -------------------------------------------------------
 There are no tests to run.
-
- 
 
 Results :
 
- 
-
 Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
 
- 
-
 [INFO] [jar:jar]
-
-[INFO] Building jar:
-D:\java\workspace\malistedecourses\target\malistedecourses-0.0.1-SNAPSHOT.jar
-
-[INFO]
-------------------------------------------------------------------------
-
+[INFO] Building jar: D:\java\workspace\malistedecourses\target\malistedecourses-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESSFUL
-
-[INFO]
-------------------------------------------------------------------------
-
+[INFO] ------------------------------------------------------------------------
 [INFO] Total time: 15 seconds
-
 [INFO] Finished at: Fri Jan 02 17:02:09 CET 2009
-
 [INFO] Final Memory: 6M/13M
-
-[INFO]
-------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+-----------------------------------------------------------
 
 Nous constatons que Maven a compilé nos trois fichiers sources et
 construit un fichier JAR, ce qu'on attendait de lui, mais il a également
@@ -462,6 +387,7 @@ la forme décrite à la Figure 01-02.
 Figure 01-02
 
 Les étapes élémentaires de construction d'un projet.
+image:illustrations/01-02.png[]
 
 Cette approche fonctionne très bien et permet de faire à peu près tout
 ce qu'on veut, mais elle nécessite :
@@ -573,15 +499,13 @@ traitements.
 
 La première partie du POM permet d'identifier le projet lui-même.
 
-Listing 1.5 : L'en-tête du fichier POM
-
+.Listing 1.5 : L'en-tête du fichier POM
+--------------------------------------------------------
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>fr.noubliepaslalistedescourses</groupId>
-
   <artifactId>noubliepaslalistedescourses</artifactId>
-
   <version>0.0.1-SNAPSHOT</version>
+--------------------------------------------------------
 
 L'élément modelVersion permet de savoir quelle version de la structure
 de données "modèle de projet" est représentée dans le fichier XML.
@@ -643,13 +567,13 @@ projet car dans la comparaison purement alphabétique, "GA" est inférieur
 
 La deuxième partie du POM concerne la construction du projet :
 
-Listing 1.6 : Le bloc build du fichier POM
+.Listing 1.6 : Le bloc build du fichier POM
 
+--------------------------------------------------------
 <build>
-
     <sourceDirectory>src</sourceDirectory>
-
 </build>
+--------------------------------------------------------
 
 L'approche déclarative utilisée par Maven permet de définir
 l'emplacement de nos fichiers sources. Le projet étant à la fois très
@@ -660,31 +584,21 @@ sources Java, nous n'aurions même pas eu besoin de ce bloc <build> !
 La troisième partie de POM concerne les bibliothèques dont dépend le
 projet :
 
-Listing 1.7 : Le bloc dependencies du fichier POM
-
+.Listing 1.7 : Le bloc dependencies du fichier POM
+--------------------------------------------------------
   <dependencies>
-
     <dependency>
-
       <groupId>javax.mail</groupId>
-
       <artifactId>mail</artifactId>
-
       <version>1.4</version>
-
     </dependency>
-
     <dependency>
-
       <groupId>commons-io</groupId>
-
       <artifactId>commons-io</artifactId>
-
       <version>1.4</version>
-
     </dependency>
-
   <dependencies>
+--------------------------------------------------------
 
 Une nouvelle fois, l'approche déclarative prend le dessus : nous
 n'indiquons pas l'emplacement physique de ces bibliothèques, à savoir
